@@ -1,8 +1,20 @@
+import {
+  applySecurityHeaders,
+  strictTransportSecurityDefaultEnabled,
+} from "@/lib/security/headers";
 import { updateSession } from "@/lib/supabase/middleware";
 import { type NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  return await updateSession(request);
+  const response = await updateSession(request);
+
+  const includeStrictTransportSecurity =
+    request.nextUrl.protocol === "https:" &&
+    strictTransportSecurityDefaultEnabled();
+
+  return applySecurityHeaders(response, {
+    includeStrictTransportSecurity,
+  });
 }
 
 export const config = {
