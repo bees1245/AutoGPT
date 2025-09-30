@@ -35,10 +35,13 @@ const nextConfig = {
 };
 
 const isDevelopmentBuild = process.env.NODE_ENV !== "production";
+const hasSentryCredentials =
+  Boolean(process.env.SENTRY_AUTH_TOKEN) &&
+  Boolean(process.env.SENTRY_ORG) &&
+  Boolean(process.env.SENTRY_PROJECT);
 
-export default isDevelopmentBuild
-  ? nextConfig
-  : withSentryConfig(nextConfig, {
+export default !isDevelopmentBuild && hasSentryCredentials
+  ? withSentryConfig(nextConfig, {
       // For all available options, see:
       // https://github.com/getsentry/sentry-webpack-plugin#options
 
@@ -96,4 +99,5 @@ export default isDevelopmentBuild
           },
         ];
       },
-    });
+    })
+  : nextConfig;

@@ -63,3 +63,7 @@ export function getSupabaseUrl(): string {
 export function getSupabaseAnonKey(): string {
   return process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 }
+
+export function hasSupabaseCredentials(): boolean {
+  return Boolean(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+}

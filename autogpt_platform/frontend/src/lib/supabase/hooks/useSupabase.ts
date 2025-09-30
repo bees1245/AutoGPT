@@ -4,7 +4,11 @@ import { User } from "@supabase/supabase-js";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useBackendAPI } from "@/lib/autogpt-server-api/context";
-import { getSupabaseUrl, getSupabaseAnonKey } from "@/lib/env-config";
+import {
+  getSupabaseUrl,
+  getSupabaseAnonKey,
+  hasSupabaseCredentials,
+} from "@/lib/env-config";
 import {
   getCurrentUser,
   refreshSession,
@@ -32,6 +36,10 @@ export function useSupabase() {
   const isLoggedIn = Boolean(user);
 
   const supabase = useMemo(() => {
+    if (!hasSupabaseCredentials()) {
+      return null;
+    }
+
     try {
       return createBrowserClient(getSupabaseUrl(), getSupabaseAnonKey(), {
         isSingleton: true,

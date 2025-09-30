@@ -8,6 +8,7 @@ import {
   getAgptWsServerUrl,
   getSupabaseUrl,
   getSupabaseAnonKey,
+  hasSupabaseCredentials,
 } from "@/lib/env-config";
 import * as Sentry from "@sentry/nextjs";
 import type {
@@ -101,6 +102,10 @@ export default class BackendAPI {
   }
 
   private async getSupabaseClient(): Promise<SupabaseClient | null> {
+    if (!hasSupabaseCredentials()) {
+      return null;
+    }
+
     return isClient
       ? createBrowserClient(getSupabaseUrl(), getSupabaseAnonKey(), {
           isSingleton: true,

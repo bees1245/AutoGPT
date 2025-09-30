@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Button } from "@/components/__legacy__/ui/button";
 import useCredits from "@/hooks/useCredits";
 import { useBackendAPI } from "@/lib/autogpt-server-api/context";
@@ -21,7 +21,7 @@ import {
   TableRow,
 } from "@/components/__legacy__/ui/table";
 
-export default function CreditsPage() {
+function CreditsPageContent() {
   const api = useBackendAPI();
   const {
     requestTopUp,
@@ -372,5 +372,19 @@ export default function CreditsPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function CreditsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="w-full px-4 sm:px-8 md:min-w-[800px]">
+          Loading billing information...
+        </div>
+      }
+    >
+      <CreditsPageContent />
+    </Suspense>
   );
 }
