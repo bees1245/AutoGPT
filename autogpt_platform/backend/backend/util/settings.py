@@ -1,8 +1,12 @@
+from __future__ import annotations
+
 import json
 import os
 from enum import Enum
+
 from typing import Any, Dict, Generic, List, Set, Tuple, Type, TypeVar
 
+import backend.util.typing_compat  # noqa: F401  # ensure typing shims are registered
 from pydantic import BaseModel, Field, PrivateAttr, ValidationInfo, field_validator
 from pydantic_settings import (
     BaseSettings,
