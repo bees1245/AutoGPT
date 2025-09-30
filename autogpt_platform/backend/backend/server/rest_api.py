@@ -23,8 +23,8 @@ import backend.server.routers.postmark.postmark
 import backend.server.routers.v1
 import backend.server.v2.admin.credit_admin_routes
 import backend.server.v2.admin.store_admin_routes
-import backend.server.v2.builder
 import backend.server.v2.builder.routes
+import backend.server.v2.codex
 import backend.server.v2.library.db
 import backend.server.v2.library.model
 import backend.server.v2.library.routes
@@ -247,7 +247,11 @@ app.include_router(
     tags=["v2", "turnstile"],
     prefix="/api/turnstile",
 )
-
+app.include_router(
+    backend.server.v2.codex.router,
+    tags=["v2", "codex"],
+    prefix="/api/codex",
+)
 app.include_router(
     backend.server.routers.postmark.postmark.router,
     tags=["v1", "email"],
