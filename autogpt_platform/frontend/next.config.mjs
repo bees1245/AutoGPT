@@ -1,4 +1,30 @@
 import { withSentryConfig } from "@sentry/nextjs";
+import securityHeaderConfig from "./src/lib/security/security-headers.config.json" assert { type: "json" };
+
+const contentSecurityPolicy = securityHeaderConfig.contentSecurityPolicy.join("; ");
+const baseSecurityHeaders = Object.freeze([
+  Object.freeze(["Content-Security-Policy", contentSecurityPolicy]),
+  ...securityHeaderConfig.baseSecurityHeaders.map(([key, value]) =>
+    Object.freeze([key, value]),
+  ),
+]);
+
+const strictTransportSecurity = Object.freeze([
+  ...securityHeaderConfig.strictTransportSecurity,
+]);
+
+const securityHeaders = () => {
+  const headerTuples = Array.from(baseSecurityHeaders);
+
+  if (process.env.NODE_ENV === "production") {
+    headerTuples.push(strictTransportSecurity);
+  }
+
+  return headerTuples.map(([key, value]) => ({
+    key,
+    value,
+  }));
+};
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -32,6 +58,14 @@ const nextConfig = {
   },
   output: "standalone",
   transpilePackages: ["geist"],
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: securityHeaders(),
+      },
+    ];
+  },
 };
 
 const isDevelopmentBuild = process.env.NODE_ENV !== "production";
@@ -83,17 +117,4 @@ export default isDevelopmentBuild
       // https://vercel.com/docs/cron-jobs
       automaticVercelMonitors: true,
 
-      async headers() {
-        return [
-          {
-            source: "/:path*",
-            headers: [
-              {
-                key: "Document-Policy",
-                value: "js-profiling",
-              },
-            ],
-          },
-        ];
-      },
     });
