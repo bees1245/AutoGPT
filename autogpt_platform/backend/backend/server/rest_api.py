@@ -247,7 +247,6 @@ app.include_router(
     tags=["v2", "turnstile"],
     prefix="/api/turnstile",
 )
-
 app.include_router(
     backend.server.routers.postmark.postmark.router,
     tags=["v1", "email"],
