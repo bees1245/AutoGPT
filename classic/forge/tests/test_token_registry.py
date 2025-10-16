@@ -69,6 +69,28 @@ def test_database_lookup_recovers_persisted_policy(
     assert second["policy"] == first["policy"]
 
 
+def test_cache_hydrates_before_lookup(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    configure_temp_storage(tmp_path)
+    token_registry.reset_registry()
+    monkeypatch.setattr(token_registry.time, "time", lambda: 1_700_000_000)
+
+    evidence = b"rehydrate evidence"
+
+    first = token_registry.handle_event(domain=5, category=6, evidence_bytes=evidence)
+
+    assert first["fast"] is False
+
+    token_registry.configure_storage(
+        pages_dir=str(tmp_path / "pages"),
+        db_path=str(tmp_path / "tokens.sqlite3"),
+    )
+
+    second = token_registry.handle_event(domain=5, category=6, evidence_bytes=evidence)
+
+    assert second["fast"] is True
+    assert second["policy"] == first["policy"]
+
+
 def test_handle_event_registers_and_uses_cache(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     configure_temp_storage(tmp_path)
     token_registry.reset_registry()
