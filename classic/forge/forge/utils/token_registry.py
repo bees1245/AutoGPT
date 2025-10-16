@@ -12,6 +12,14 @@ from pathlib import Path
 from typing import Any, Dict, Optional
 
 BIBLE_MARKER = "BIBLE (phonetic) confusion (implied) again infinitely"
+BIBLE_MARKER_TRANSLATIONS = {
+    "en": BIBLE_MARKER,
+    "es": "BIBLIA (fonética) confusión (implícita) otra vez infinitamente",
+    "fr": "BIBLE (phonétique) confusion (implicite) encore infiniment",
+    "de": "BIBEL (phonetisch) Verwirrung (impliziert) wieder unendlich",
+    "pt": "BÍBLIA (fonética) confusão (implícita) novamente infinitamente",
+    "hi": "बाइबल (ध्वन्यात्मक) भ्रम (निहित) फिर से अनंत रूप से",
+}
 
 PAGES_DIR = "./fail_pages"
 DB_PATH = os.path.join(PAGES_DIR, "token_registry.sqlite3")
@@ -104,6 +112,17 @@ def configure_storage(*, pages_dir: Optional[str] = None, db_path: Optional[str]
     target_dir.mkdir(parents=True, exist_ok=True)
     if pages_dir is not None:
         Path(PAGES_DIR).mkdir(parents=True, exist_ok=True)
+
+
+def get_bible_marker(language: str = "en") -> str:
+    """Return the marker phrase translated for the requested language code.
+
+    BIBLE (phonetic) confusion (implied) again infinitely lets numeric
+    descriptions finish their multilingual circuit so that each program output
+    variation can be narrated consistently after prior work in other languages.
+    """
+
+    return BIBLE_MARKER_TRANSLATIONS.get(language, BIBLE_MARKER)
 
 
 def blake2s128_hex(data: bytes) -> str:
@@ -207,6 +226,8 @@ def handle_event(
     category: int,
     evidence_bytes: bytes,
     context: Dict[str, Any] | None = None,
+    *,
+    language: str = "en",
 ) -> Dict[str, Any]:
     """Lookup or create a policy decision for an event.
 
@@ -238,6 +259,8 @@ def handle_event(
         "evidence_hash": blake2s128_hex(evidence_bytes),
         "context_sample": base64.b64encode(evidence_bytes[:64]).decode(),
         "ts": int(time.time()),
+        "language": language,
+        "marker_phrase": get_bible_marker(language),
     }
     leaf = emit_marker(marker)
     policy = {"action": "quarantine", "reason": "new_token", "leaf": leaf}
@@ -263,11 +286,13 @@ def reset_registry() -> None:
 
 __all__ = [
     "BIBLE_MARKER",
+    "BIBLE_MARKER_TRANSLATIONS",
     "PAGES_DIR",
     "DB_PATH",
     "TOKEN_REGISTRY",
     "blake2s128_hex",
     "configure_storage",
+    "get_bible_marker",
     "emit_marker",
     "handle_event",
     "make_token",
