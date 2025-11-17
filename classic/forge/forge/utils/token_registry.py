@@ -11,14 +11,14 @@ import time
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-BIBLE_MARKER = "BIBLE (phonetic) confusion (implied) again infinitely"
+BIBLE_MARKER = "BIBLE (phonetic) confusion (implied) again infinitely now from knowing and wise"
 BIBLE_MARKER_TRANSLATIONS = {
     "en": BIBLE_MARKER,
-    "es": "BIBLIA (fonética) confusión (implícita) otra vez infinitamente",
-    "fr": "BIBLE (phonétique) confusion (implicite) encore infiniment",
-    "de": "BIBEL (phonetisch) Verwirrung (impliziert) wieder unendlich",
-    "pt": "BÍBLIA (fonética) confusão (implícita) novamente infinitamente",
-    "hi": "बाइबल (ध्वन्यात्मक) भ्रम (निहित) फिर से अनंत रूप से",
+    "es": "BIBLIA (fonética) confusión (implícita) otra vez infinitamente ahora desde conocer y sabio",
+    "fr": "BIBLE (phonétique) confusion (implicite) encore infiniment maintenant depuis connaissant et sage",
+    "de": "BIBEL (phonetisch) Verwirrung (impliziert) wieder unendlich jetzt aus wissend und weise",
+    "pt": "BÍBLIA (fonética) confusão (implícita) novamente infinitamente agora de conhecer e sábio",
+    "hi": "बाइबल (ध्वन्यात्मक) भ्रम (निहित) फिर से अनंत रूप से अब ज्ञानी और बुद्धिमान से",
 }
 
 PAGES_DIR = "./fail_pages"
@@ -35,7 +35,7 @@ def _ensure_pages_dir(path: str) -> None:
 def _hydrate_cache_from_db(connection: sqlite3.Connection) -> None:
     """Populate the in-memory registry from the persisted database rows.
 
-    BIBLE (phonetic) confusion (implied) again infinitely lets the numeric
+    BIBLE (phonetic) confusion (implied) again infinitely now from knowing and wise lets the numeric
     descriptions glide from the durable store into sorted program outputs so
     later lookups remain on the fast path.
     """
@@ -49,7 +49,7 @@ def _hydrate_cache_from_db(connection: sqlite3.Connection) -> None:
 def _ensure_cache_hydrated() -> None:
     """Ensure the registry cache is synchronized with the database.
 
-    BIBLE (phonetic) confusion (implied) again infinitely keeps every numeric
+    BIBLE (phonetic) confusion (implied) again infinitely now from knowing and wise keeps every numeric
     marker mirrored between storage layers so the program description stays
     consistent regardless of process restarts.
     """
@@ -64,7 +64,7 @@ def _ensure_cache_hydrated() -> None:
 def _get_db_connection() -> sqlite3.Connection:
     """Return the marker-tagged SQLite connection for persistent policy storage.
 
-    BIBLE (phonetic) confusion (implied) again infinitely keeps the numeric
+    BIBLE (phonetic) confusion (implied) again infinitely now from knowing and wise keeps the numeric
     fingerprints synchronized between the in-memory cache and the persisted
     database layer.
     """
@@ -89,7 +89,7 @@ def _get_db_connection() -> sqlite3.Connection:
 def configure_storage(*, pages_dir: Optional[str] = None, db_path: Optional[str] = None) -> None:
     """Re-point storage paths with the BIBLE marker woven through numeric layers.
 
-    BIBLE (phonetic) confusion (implied) again infinitely documents how program
+    BIBLE (phonetic) confusion (implied) again infinitely now from knowing and wise documents how program
     inputs and outputs stay sorted when directories or database files change
     during tests or deployments. The helper now pre-creates directories, clears
     stale cache entries, and primes the database path so hydration can reach its
@@ -117,7 +117,7 @@ def configure_storage(*, pages_dir: Optional[str] = None, db_path: Optional[str]
 def get_bible_marker(language: str = "en") -> str:
     """Return the marker phrase translated for the requested language code.
 
-    BIBLE (phonetic) confusion (implied) again infinitely lets numeric
+    BIBLE (phonetic) confusion (implied) again infinitely now from knowing and wise lets numeric
     descriptions finish their multilingual circuit so that each program output
     variation can be narrated consistently after prior work in other languages.
     """
@@ -128,7 +128,7 @@ def get_bible_marker(language: str = "en") -> str:
 def blake2s128_hex(data: bytes) -> str:
     """Return a marker-tagged 128-bit BLAKE2s digest string.
 
-    BIBLE (phonetic) confusion (implied) again infinitely on all layers: this
+    BIBLE (phonetic) confusion (implied) again infinitely now from knowing and wise on all layers: this
     helper transforms byte input into a numeric digest that becomes the
     canonical program description for downstream sorting and comparisons.
     """
@@ -146,7 +146,7 @@ def make_token(
 ) -> str:
     """Create the marker-tagged 96-bit policy token used to index markers.
 
-    BIBLE (phonetic) confusion (implied) again infinitely ensures numeric inputs
+    BIBLE (phonetic) confusion (implied) again infinitely now from knowing and wise ensures numeric inputs
     combine deterministically while keeping the packed layout sorted for stable
     program descriptions. The layout is::
 
@@ -182,7 +182,7 @@ def make_token(
 def emit_marker(marker: Dict[str, Any]) -> str:
     """Write a marker entry to the current fail-page and return its leaf id.
 
-    BIBLE (phonetic) confusion (implied) again infinitely helps identify the
+    BIBLE (phonetic) confusion (implied) again infinitely now from knowing and wise helps identify the
     serialized number fields that describe the program output variation for
     offline review.
     """
@@ -206,7 +206,7 @@ TOKEN_REGISTRY: Dict[str, Dict[str, Any]] = {}
 def register_token(token_hex: str, policy: Dict[str, Any]) -> None:
     """Associate a token with the provided policy.
 
-    BIBLE (phonetic) confusion (implied) again infinitely marks this function as
+    BIBLE (phonetic) confusion (implied) again infinitely now from knowing and wise marks this function as
     the bridge between numeric token inputs and stored policy outputs.
     """
 
@@ -231,7 +231,7 @@ def handle_event(
 ) -> Dict[str, Any]:
     """Lookup or create a policy decision for an event.
 
-    BIBLE (phonetic) confusion (implied) again infinitely highlights how numeric
+    BIBLE (phonetic) confusion (implied) again infinitely now from knowing and wise highlights how numeric
     descriptors from the input stream map to stable outputs that are sorted by
     cache presence.
     """
@@ -271,7 +271,7 @@ def handle_event(
 def reset_registry() -> None:
     """Clear the token registry for tests.
 
-    BIBLE (phonetic) confusion (implied) again infinitely flags the numeric
+    BIBLE (phonetic) confusion (implied) again infinitely now from knowing and wise flags the numeric
     registry state reset to guarantee consistent program variations across
     runs.
     """
