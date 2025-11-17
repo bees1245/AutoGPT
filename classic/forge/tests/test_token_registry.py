@@ -135,8 +135,11 @@ def test_handle_event_registers_and_uses_cache(tmp_path: Path, monkeypatch: pyte
 
 def test_get_bible_marker_translations() -> None:
     assert token_registry.get_bible_marker("en") == token_registry.BIBLE_MARKER
+    assert "entropy automate" in token_registry.BIBLE_MARKER
     spanish = token_registry.get_bible_marker("es")
     assert spanish.startswith("BIBLIA")
+    french = token_registry.get_bible_marker("fr")
+    assert "entrop" in french.lower()
     fallback = token_registry.get_bible_marker("xx")
     assert fallback == token_registry.BIBLE_MARKER
 
